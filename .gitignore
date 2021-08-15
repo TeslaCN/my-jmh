@@ -26,6 +26,9 @@ hs_err_pid*
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 # Sensitive or high-churn files
 .idea
+*.ipr
+*.iml
+*.iws
 
 # IntelliJ
 out/
