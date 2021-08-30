@@ -19,7 +19,8 @@ public class MultiShardingFullPointSelectBenchmark {
     
     private static final int TABLE_SIZE = 1_000_000;
     
-    private static final DataSource dataSource = ShardingSpheres.createDataSource("/shardingsphere-jdbc/sysbench-remote-single.yaml");
+//    private static final DataSource dataSource = ShardingSpheres.createDataSource("/shardingsphere-jdbc/sysbench-remote-single.yaml");
+    private static final DataSource dataSource = ShardingSpheres.createDataSource("/shardingsphere-jdbc/sysbench-remote-dd-sharding.yaml");
     
     private final PreparedStatement[] preparedStatements = new PreparedStatement[10];
     
