@@ -20,7 +20,7 @@ public final class MySQLX {
         String profile = System.getProperty("profile");
         String configurationFile = System.getProperty("conf");
         try {
-            in = null == profile || profile.trim().isEmpty() ? new FileInputStream(configurationFile) : Jdbcs.class.getResourceAsStream(String.format("/META-INF/profiles/%s.properties", profile));
+            in = null == profile || profile.trim().isEmpty() ? new FileInputStream(configurationFile) : Jdbcs.class.getResourceAsStream(String.format("/META-INF/profiles/mysqlx/%s.properties", profile));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(String.format("Fail to get profile %s or conf %s", profile, configurationFile), e);
         }
@@ -35,7 +35,7 @@ public final class MySQLX {
             throw new RuntimeException(e);
         }
         try {
-            return SESSION_FACTORY.getSession(props.getProperty("url"));
+            return SESSION_FACTORY.getSession(props);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

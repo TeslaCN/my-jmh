@@ -42,7 +42,7 @@ THE POSSIBILITY OF SUCH DAMAGE.
     <artifactId>jmh-jdbc</artifactId>
     <packaging>jar</packaging>
 
-    <name>JMH benchmark sample: Java</name>
+    <name>JMH benchmark: JDBC</name>
 
     <dependencies>
         <dependency>
