@@ -80,24 +80,15 @@ public class UnpooledReadWriteMySQLXBenchmark {
             each.clearBindings().bind(random.nextInt(BenchmarkParameters.TABLE_SIZE)).execute();
         }
         indexUpdates[random.nextInt(BenchmarkParameters.TABLES)].clearBindings().bind(random.nextInt(BenchmarkParameters.TABLE_SIZE)).execute();
-        nonIndexUpdate[random.nextInt(BenchmarkParameters.TABLES)].set("c", randomString(120)).clearBindings()
+        nonIndexUpdate[random.nextInt(BenchmarkParameters.TABLES)].set("c", Strings.randomString(120)).clearBindings()
                 .bind("id", random.nextInt(BenchmarkParameters.TABLE_SIZE)).execute();
         int table = random.nextInt(BenchmarkParameters.TABLES);
         int id = random.nextInt(BenchmarkParameters.TABLE_SIZE);
         deletes[table].clearBindings().bind(id).execute();
         session.getDefaultSchema().getTable("sbtest" + (table + 1))
                 .insert("id", "k", "c", "pad")
-                .values(id, random.nextInt(Integer.MAX_VALUE), randomString(120), randomString(60)).execute();
+                .values(id, random.nextInt(Integer.MAX_VALUE), Strings.randomString(120), Strings.randomString(60)).execute();
         session.commit();
-    }
-    
-    private String randomString(int length) {
-        StringBuilder sb = new StringBuilder(length);
-        while (sb.length() < length) {
-            sb.append(ThreadLocalRandom.current().nextLong());
-        }
-        sb.setLength(length);
-        return sb.toString();
     }
     
     @TearDown(Level.Trial)
