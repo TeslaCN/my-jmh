@@ -37,7 +37,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Execute Statement: ID = 6
  * Execute Statement: ID = 1
  */
-@State(Scope.Group)
+@State(Scope.Thread)
 public class UnpooledReadWriteBenchmark {
     
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
@@ -75,7 +75,6 @@ public class UnpooledReadWriteBenchmark {
         }
     }
     
-    @Group
     @Benchmark
     public void benchReadWrite() throws Exception {
         for (PreparedStatement each : reads) {

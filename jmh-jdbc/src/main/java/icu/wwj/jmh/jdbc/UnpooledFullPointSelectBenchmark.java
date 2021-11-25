@@ -32,7 +32,6 @@
 package icu.wwj.jmh.jdbc;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Group;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.OperationsPerInvocation;
 import org.openjdk.jmh.annotations.Scope;
@@ -44,16 +43,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.concurrent.ThreadLocalRandom;
 
-@State(Scope.Group)
+@State(Scope.Thread)
 public class UnpooledFullPointSelectBenchmark {
     
-    private static final int TABLE_SIZE = 1_000_000;
-    
-    private final PreparedStatement[] preparedStatements = new PreparedStatement[10];
+    private final PreparedStatement[] preparedStatements = new PreparedStatement[BenchmarkParameters.TABLES];
     
     private Connection connection;
     
-    @Setup(Level.Iteration)
+    @Setup(Level.Trial)
     public void setup() throws Exception {
         connection = Jdbcs.getConnection();
         for (int i = 0; i < preparedStatements.length; i++) {
@@ -61,17 +58,16 @@ public class UnpooledFullPointSelectBenchmark {
         }
     }
     
-    @Group("FullPointSelect")
     @Benchmark
     @OperationsPerInvocation(10)
     public void testMethod() throws Exception {
         for (PreparedStatement each : preparedStatements) {
-            each.setInt(1, ThreadLocalRandom.current().nextInt(TABLE_SIZE));
+            each.setInt(1, ThreadLocalRandom.current().nextInt(BenchmarkParameters.TABLE_SIZE));
             each.execute();
         }
     }
     
-    @TearDown(Level.Iteration)
+    @TearDown(Level.Trial)
     public void tearDown() throws Exception {
         for (PreparedStatement each : preparedStatements) {
             each.close();

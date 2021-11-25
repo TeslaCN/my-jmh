@@ -44,16 +44,14 @@ import org.openjdk.jmh.annotations.TearDown;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@State(Scope.Group)
+@State(Scope.Thread)
 public class UnpooledFullPointSelectMySQLXBenchmark {
     
-    private static final int TABLE_SIZE = 1_000_000;
-    
-    private final SelectStatement[] selectStatements = new SelectStatement[10];
+    private final SelectStatement[] selectStatements = new SelectStatement[BenchmarkParameters.TABLES];
     
     private Session session;
     
-    @Setup(Level.Iteration)
+    @Setup(Level.Trial)
     public void setup() {
         session = MySQLX.getSession();
         for (int i = 0; i < selectStatements.length; i++) {
@@ -61,18 +59,17 @@ public class UnpooledFullPointSelectMySQLXBenchmark {
         }
     }
     
-    @Group("FullPointSelectMySQLX")
     @Benchmark
     @OperationsPerInvocation(10)
     public void testMethod() {
         for (SelectStatement each : selectStatements) {
             each.clearBindings();
-            each.bind(ThreadLocalRandom.current().nextInt(TABLE_SIZE));
+            each.bind(ThreadLocalRandom.current().nextInt(BenchmarkParameters.TABLE_SIZE));
             each.execute();
         }
     }
     
-    @TearDown(Level.Iteration)
+    @TearDown(Level.Trial)
     public void tearDown() {
         session.close();
     }

@@ -6,7 +6,6 @@ import com.mysql.cj.xdevapi.SelectStatement;
 import com.mysql.cj.xdevapi.Session;
 import com.mysql.cj.xdevapi.UpdateStatement;
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Group;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -40,10 +39,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * Execute Statement: ID = 6
  * Execute Statement: ID = 1
  */
-@State(Scope.Group)
+@State(Scope.Thread)
 public class UnpooledReadWriteMySQLXBenchmark {
-    
-    private final ThreadLocalRandom random = ThreadLocalRandom.current();
     
     private Session session;
     
@@ -72,9 +69,9 @@ public class UnpooledReadWriteMySQLXBenchmark {
         }
     }
     
-    @Group
     @Benchmark
     public void benchReadWrite() {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         session.startTransaction();
         for (SelectStatement each : reads) {
             each.clearBindings().bind(random.nextInt(BenchmarkParameters.TABLE_SIZE)).execute();
