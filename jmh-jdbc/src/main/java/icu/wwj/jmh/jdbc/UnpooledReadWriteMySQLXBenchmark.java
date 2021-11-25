@@ -82,9 +82,14 @@ public class UnpooledReadWriteMySQLXBenchmark {
         int table = random.nextInt(BenchmarkParameters.TABLES);
         int id = random.nextInt(BenchmarkParameters.TABLE_SIZE);
         deletes[table].clearBindings().bind(id).execute();
-        session.getDefaultSchema().getTable("sbtest" + (table + 1))
-                .insert("id", "k", "c", "pad")
-                .values(id, random.nextInt(Integer.MAX_VALUE), Strings.randomString(120), Strings.randomString(60)).execute();
+        try {
+            session.getDefaultSchema().getTable("sbtest" + (table + 1))
+                    .insert("id", "k", "c", "pad")
+                    .values(id, random.nextInt(Integer.MAX_VALUE), Strings.randomString(120), Strings.randomString(60)).execute();
+        } catch (Exception ex) {
+            session.rollback();
+            return;
+        }
         session.commit();
     }
     
