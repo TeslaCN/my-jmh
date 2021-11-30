@@ -46,7 +46,7 @@
 <!--        <appender-ref ref="FILE" />-->
     </logger>
     
-    <logger name="io.netty" level="trace" additivity="false">
+    <logger name="io.netty" level="debug" additivity="false">
         <appender-ref ref="console" />
 <!--        <appender-ref ref="FILE" />-->
     </logger>

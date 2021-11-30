@@ -1,19 +1,19 @@
 package icu.wwj.jmh.shardingsphere5;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.SneakyThrows;
 import org.apache.shardingsphere.driver.api.yaml.YamlShardingSphereDataSourceFactory;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShardingSpheres {
     
-    public static DataSource createDataSource(final String path) {
-        try {
-            return YamlShardingSphereDataSourceFactory.createDataSource(new File(ShardingSpheres.class.getResource(path).getFile()));
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
-        }
+    @SneakyThrows
+    public static DataSource createDataSource() {
+        String configurationFile = System.getProperty("shardingsphere.configurationFile");
+        return YamlShardingSphereDataSourceFactory.createDataSource(new File(configurationFile));
     }
 }
