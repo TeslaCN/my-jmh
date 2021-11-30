@@ -16,7 +16,7 @@ public class LoopBenchmark {
     
     @Setup
     public void setup() {
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 10000000; i++) {
             list.add(ThreadLocalRandom.current().nextInt());
         }
     }
@@ -42,5 +42,10 @@ public class LoopBenchmark {
     @Benchmark
     public int benchStream() {
         return list.stream().mapToInt(each -> each).sum();
+    }
+    
+    @Benchmark
+    public int benchParallelStream() {
+        return list.parallelStream().mapToInt(each -> each).sum();
     }
 }

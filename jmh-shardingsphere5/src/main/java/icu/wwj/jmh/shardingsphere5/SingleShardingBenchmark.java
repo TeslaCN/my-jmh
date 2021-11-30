@@ -23,6 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Fork(3)
 @Warmup(iterations = 10, time = 3)
 @Measurement(iterations = 10, time = 3)
+@Deprecated
 public class SingleShardingBenchmark {
     
     private final Random random = ThreadLocalRandom.current();

@@ -20,6 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Fork(3)
 @Warmup(iterations = 10, time = 3)
 @Measurement(iterations = 10, time = 3)
+@Deprecated
 public class MultiShardingPointSelectBenchmark {
     
     private static final int TABLE_SIZE = 100_000;

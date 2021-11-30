@@ -48,10 +48,15 @@ THE POSSIBILITY OF SUCH DAMAGE.
         <uberjar.name>benchmarks-shardingsphere5</uberjar.name>
 
         <!--        <shardingsphere.version>5.0.0-beta</shardingsphere.version>-->
-        <shardingsphere.version>5.0.0-RC1-SNAPSHOT</shardingsphere.version>
+        <shardingsphere.version>5.0.1-SNAPSHOT</shardingsphere.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>icu.wwj.jmh.jdbc</groupId>
+            <artifactId>jmh-jdbc</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-jdbc-core</artifactId>

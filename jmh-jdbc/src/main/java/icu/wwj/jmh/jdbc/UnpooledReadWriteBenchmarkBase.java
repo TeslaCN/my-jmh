@@ -1,7 +1,6 @@
 package icu.wwj.jmh.jdbc;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Group;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -12,33 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Prepare Statement (ID = 1): 'COMMIT'
- * Prepare Statement (ID = 2): SELECT c FROM sbtest1 WHERE id=?
- * Prepare Statement (ID = 3): UPDATE sbtest3 SET k=k+1 WHERE id=?
- * Prepare Statement (ID = 4): UPDATE sbtest10 SET c=? WHERE id=?
- * Prepare Statement (ID = 5): DELETE FROM sbtest8 WHERE id=?
- * Prepare Statement (ID = 6): INSERT INTO sbtest8 (id, k, c, pad) VALUES (?, ?, ?, ?)
- * <p>
- * Statement: 'BEGIN'
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 2
- * Execute Statement: ID = 3
- * Execute Statement: ID = 4
- * Execute Statement: ID = 5
- * Execute Statement: ID = 6
- * Execute Statement: ID = 1
- */
 @State(Scope.Thread)
-public class UnpooledReadWriteBenchmark {
+public abstract class UnpooledReadWriteBenchmarkBase implements JDBCConnectionProvider {
     
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
     
@@ -56,7 +30,7 @@ public class UnpooledReadWriteBenchmark {
     
     @Setup(Level.Trial)
     public void setup() throws Exception {
-        connection = Jdbcs.getConnection();
+        connection = getConnection();
         connection.setAutoCommit(false);
         for (int i = 0; i < reads.length; i++) {
             reads[i] = connection.prepareStatement(String.format("select c from sbtest%d where id=?", i + 1));
@@ -76,7 +50,7 @@ public class UnpooledReadWriteBenchmark {
     }
     
     @Benchmark
-    public void benchReadWrite() throws Exception {
+    public void oltpReadWrite() throws Exception {
         for (PreparedStatement each : reads) {
             each.setInt(1, random.nextInt(BenchmarkParameters.TABLE_SIZE));
             each.execute();
