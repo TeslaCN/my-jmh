@@ -46,5 +46,11 @@ THE POSSIBILITY OF SUCH DAMAGE.
             <artifactId>jmh-base</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.opengauss</groupId>
+            <artifactId>opengauss-jdbc</artifactId>
+            <version>2.0.1-compatibility</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 </project>
