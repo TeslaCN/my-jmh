@@ -12,11 +12,6 @@
     <name>JMH benchmark: ShardingSphere 3</name>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <uberjar.name>benchmarks-shardingsphere4</uberjar.name>
-
         <shardingsphere.version>3.1.0</shardingsphere.version>
     </properties>
 
@@ -29,6 +24,11 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>icu.wwj.jmh</groupId>
+            <artifactId>jmh-base</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
