@@ -2,7 +2,6 @@ package icu.wwj.jmh.shardingsphere5.code;
 
 import org.apache.shardingsphere.sharding.algorithm.sharding.mod.ModShardingAlgorithm;
 import org.apache.shardingsphere.sharding.api.sharding.standard.PreciseShardingValue;
-import org.openjdk.jmh.Main;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Level;
@@ -13,8 +12,10 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.runner.Runner;
+import org.openjdk.jmh.runner.RunnerException;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -49,10 +50,11 @@ public class ModShardingAlgorithmBenchmark {
         return algorithm.doSharding(availableTargets, new PreciseShardingValue<>("", "", random.nextLong(Long.MAX_VALUE)));
     }
     
-    public static void main(String[] args) throws IOException {
-        String[] result = new String[1 + args.length];
-        result[0] = ModShardingAlgorithmBenchmark.class.getName();
-        System.arraycopy(args, 0, result, 1, args.length);
-        Main.main(result);
+    public static void main(String[] args) throws RunnerException {
+        new Runner(new OptionsBuilder()
+                .jvmArgsAppend("-XX:+UseNUMA")
+                .include(ModShardingAlgorithmBenchmark.class.getName())
+                .threads(Runtime.getRuntime().availableProcessors())
+                .build()).run();
     }
 }
