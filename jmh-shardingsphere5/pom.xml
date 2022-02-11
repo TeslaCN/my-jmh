@@ -56,6 +56,11 @@ THE POSSIBILITY OF SUCH DAMAGE.
             <version>${shardingsphere.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-db-protocol-postgresql</artifactId>
+            <version>${shardingsphere.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
