@@ -1,7 +1,6 @@
 package icu.wwj.jmh.jdbc;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -9,8 +8,8 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
-import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.profile.StackProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
@@ -57,7 +56,7 @@ public class PgPreparedStatementBenchmark {
     
     @Benchmark
     public void benchSetTimestamp() throws SQLException {
-        preparedStatement.setTimestamp(1, new Timestamp(random.nextLong()));
+        preparedStatement.setTimestamp(1, new Timestamp(random.nextLong(Long.MAX_VALUE)));
     }
     
     @TearDown(Level.Invocation)
@@ -72,8 +71,9 @@ public class PgPreparedStatementBenchmark {
     public static void main(String[] args) throws RunnerException {
         new Runner(new OptionsBuilder()
                 .include(PgPreparedStatementBenchmark.class.getName())
-                .threads(16)
+                .threads(Runtime.getRuntime().availableProcessors())
                 .forks(3)
+                .addProfiler(StackProfiler.class)
                 .build()).run();
     }
 }
