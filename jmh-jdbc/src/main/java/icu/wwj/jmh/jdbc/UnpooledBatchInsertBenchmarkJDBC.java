@@ -1,11 +1,6 @@
 package icu.wwj.jmh.jdbc;
 
-import java.sql.Connection;
+import icu.wwj.jmh.jdbc.connection.UnpooledJDBCConnectionProvider;
 
-public class UnpooledBatchInsertBenchmarkJDBC extends UnpooledBatchInsertBenchmarkBase {
-    
-    @Override
-    public Connection getConnection() {
-        return Jdbcs.getConnection();
-    }
+public class UnpooledBatchInsertBenchmarkJDBC extends UnpooledBatchInsertBenchmarkBase implements UnpooledJDBCConnectionProvider {
 }

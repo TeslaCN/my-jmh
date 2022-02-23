@@ -1,4 +1,4 @@
-package icu.wwj.jmh.jdbc;
+package icu.wwj.jmh.jdbc.connection;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

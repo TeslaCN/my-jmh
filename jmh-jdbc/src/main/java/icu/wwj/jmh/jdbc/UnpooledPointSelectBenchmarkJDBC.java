@@ -1,11 +1,6 @@
 package icu.wwj.jmh.jdbc;
 
-import java.sql.Connection;
+import icu.wwj.jmh.jdbc.connection.UnpooledJDBCConnectionProvider;
 
-public class UnpooledPointSelectBenchmarkJDBC extends UnpooledPointSelectBenchmarkBase {
-    
-    @Override
-    public Connection getConnection() {
-        return Jdbcs.getConnection();
-    }
+public class UnpooledPointSelectBenchmarkJDBC extends UnpooledPointSelectBenchmarkBase implements UnpooledJDBCConnectionProvider {
 }
