@@ -21,7 +21,7 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javac.target>8</javac.target>
+        <java.version>17</java.version>
         
         <jmh.version>1.33</jmh.version>
     </properties>
@@ -102,10 +102,10 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
                     <configuration>
-<!--                        <compilerVersion>${javac.target}</compilerVersion>-->
-                        <source>${javac.target}</source>
-                        <target>${javac.target}</target>
-<!--                        <release>${javac.target}</release>-->
+                        <compilerVersion>${java.version}</compilerVersion>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <release>${java.version}</release>
                     </configuration>
                 </plugin>
                 <plugin>

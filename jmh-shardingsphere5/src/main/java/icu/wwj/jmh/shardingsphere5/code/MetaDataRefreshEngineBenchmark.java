@@ -19,7 +19,7 @@ public class MetaDataRefreshEngineBenchmark {
     
     @Benchmark
     public void benchMetaDataRefreshEngine() throws SQLException {
-        new MetaDataRefreshEngine(null, null, null, null).refresh(new PostgreSQLSelectStatement(), Collections.emptyList());
+        new MetaDataRefreshEngine(null, null, null, null).refresh(new PostgreSQLSelectStatement(), Collections::emptyList);
     }
     
     public static void main(String[] args) throws IOException {
