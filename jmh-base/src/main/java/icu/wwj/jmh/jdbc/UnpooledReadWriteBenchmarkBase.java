@@ -74,6 +74,7 @@ public abstract class UnpooledReadWriteBenchmarkBase implements JDBCConnectionPr
         insert.setInt(2, random.nextInt(Integer.MAX_VALUE));
         insert.setString(3, Strings.randomString(120));
         insert.setString(4, Strings.randomString(60));
+        insert.execute();
         connection.commit();
     }
     
